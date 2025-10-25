@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------
+
+Command-Line:
+ - /Users/zhaohuijiang/.gradle/jdks/eclipse_adoptium-21-x86_64-os_x.2/jdk-21.0.8+9/Contents/Home/bin/java
+ - -jar
+ - /Users/zhaohuijiang/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.3/85c096b0155715275f84922d41462484c9a0285c/mergetool-2.0.3-fatjar.jar
+ - --client
+ - /Users/zhaohuijiang/.gradle/caches/neoformruntime/intermediate_results/stripClient_1bf6af5c004b5ea03af259692555149aa77e83c0_output.jar
+ - --server
+ - /Users/zhaohuijiang/.gradle/caches/neoformruntime/intermediate_results/stripServer_eef09d0712c520fea4b8cda06c257570034311e1_output.jar
+ - --ann
+ - 1.21.1
+ - --output
+ - ./output.jar
+ - --inject
+ - false
+--------------------------------------------------------------------------------
+
