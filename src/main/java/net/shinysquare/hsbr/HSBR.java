@@ -1,35 +1,23 @@
 package net.shinysquare.hsbr;
 
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.shinysquare.hsbr.gui.CustomHudRenderer;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
-
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.ModContainer;
+
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
+
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(HSBR.MODID)
@@ -45,17 +33,33 @@ public class HSBR {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        // Register the Deferred Register to the mod event bus so blocks get registere
+        // Register the Deferred Register to the mod event bus so blocks get registered
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (HSBR) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
-
+        modEventBus.addListener(this::registerGuiLayers);
         // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    }
+
+    public void registerGuiLayers(RegisterGuiLayersEvent event) {
+
+        // --- 1. REGISTER THE CUSTOM OVERLAY ---
+        // Register the CustomHudRenderer, placing it just above the Hotbar layer.
+        event.registerAbove(
+                VanillaGuiLayers.HOTBAR, // ID of the layer to place our custom HUD above
+                ResourceLocation.fromNamespaceAndPath(MODID, "custom_hud"), // A unique identifier for our overlay
+                new CustomHudRenderer()  // The instance of our renderer class
+        );
+
+        // --- 2. DISABLE CONFLICTING VANILLA OVERLAYS ---
+        // Since there's no replace method, we'll just let our custom renderer handle everything
+        // Make sure your CustomHudRenderer doesn't call the super methods that would render vanilla elements
+
+        // Note: If vanilla overlays are still showing, you may need to use mixins to disable them
+        // or ensure your CustomHudRenderer properly overrides the rendering
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

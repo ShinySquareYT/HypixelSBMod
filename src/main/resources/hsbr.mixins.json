@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "net.shinysquare.hsbr.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "hsbr.refmap.json",
+  "client": [
+    "GuiMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

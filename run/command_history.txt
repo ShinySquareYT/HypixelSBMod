@@ -1,0 +1,2 @@
+/gamemode survival
+/effect give @s minecraft:hunger
