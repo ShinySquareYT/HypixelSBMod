@@ -1,2 +1,5 @@
 /gamemode survival
 /effect give @s minecraft:hunger
+/effect give @s minecraft:health_boost infinite 10
+/effect give @s minecraft:hunger
+/give @s minecraft:powder_snow_bucket 2
