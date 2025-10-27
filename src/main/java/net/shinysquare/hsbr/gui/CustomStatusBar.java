@@ -102,7 +102,7 @@ public class CustomStatusBar {
                 }
                 // Freezing - light blue/cyan
                 if (player.isFullyFrozen() || player.getTicksFrozen() > 0) {
-                    return new Color(0, 191, 255);
+                    return new Color(107, 206, 241);
                 }
                 // Default red
                 return colors[0];
@@ -150,7 +150,7 @@ public class CustomStatusBar {
 
     public enum BarType {
         HEALTH(new Color[]{new Color(255, 0, 0)}),
-        HUNGER(new Color[]{new Color(160, 82, 45)});
+        HUNGER(new Color[]{new Color(213, 107, 52)});
 
         private final Color[] colors;
 
